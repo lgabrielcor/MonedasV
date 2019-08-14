@@ -1,0 +1,56 @@
+﻿@model Servicios.DTO.UsuarioDTO
+@{
+    ViewBag.Title = "Inicio";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<style type="text/css">
+    html, body {
+        height: 100%
+    }
+
+    .top-buffer {
+        margin-top: 20px;
+        padding-left: 20px
+    }
+</style>
+
+
+<div class="container-fluid  h-100 row align-items-center">
+    @using (Html.BeginForm("login", "Home", method: FormMethod.Post))
+    {
+        <div class="row top-buffer">
+            <div class="col-12">
+                <img src="~/Content/PinBall.png" class="img-fluid align-center" />
+            </div>
+        </div>
+        <div class="row top-buffer">
+            <div class="col-3">
+                <small>Usuario</small>
+            </div>
+            <div class="col-9">
+                @Html.EditorFor(model => model.usuario)
+            </div>
+        </div>
+
+        <div class="row top-buffer">
+            <div class="col-3">
+                <small>Contraseña</small>
+            </div>
+            <div class="col-9">
+                @Html.PasswordFor(model => model.contrasena)
+            </div>
+        </div>
+        <div class="row top-buffer align-center">
+            <div class="col-12">
+                <input type="submit" value="Registrar" class="btn btn-lg btn-success" />
+            </div>
+        </div>
+        <div class="row top-buffer align-center">
+            <div class="col-12">
+                @Html.ActionLink("Recuperar contraseña", "recovery", "Home")
+            </div>
+        </div>
+
+    }
+</div>

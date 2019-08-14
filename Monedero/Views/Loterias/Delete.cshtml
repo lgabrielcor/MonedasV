@@ -1,0 +1,72 @@
+﻿@model Model.Loteria
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Loteria</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.diaDeJuego)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.diaDeJuego)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.horaDeCierre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.horaDeCierre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ultimoSorteo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ultimoSorteo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.estado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.codigoBase)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.codigoBase)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

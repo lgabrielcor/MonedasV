@@ -1,0 +1,332 @@
+﻿@{
+    ViewBag.Title = "Juego";
+    Layout = "~/Views/Shared/_LoginLayout.cshtml";
+}
+
+<style type="text/css">
+    html, body {
+        height: 100%
+    }
+
+    .top-buffer {
+        margin-top: 12px
+    }
+
+    input {
+        max-width: 100px !important;
+    }
+</style>
+<input type="hidden" id="cifrash" />
+<div class="container" style="margin-top:-20px">
+    <div class="row">
+        <div class="col-6">
+            <button id="volver" class="btn btn-sm btn-warning" style="width:100%">Volver</button>
+        </div>
+        <div class="col-6">
+            <button id="reporte" class="btn btn-sm btn-success" style="width:100%">Ver reporte</button>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row top-buffer">
+        <div class="col-3">
+            <small style="font-weight:bold">Fecha: </small>
+            <p>@DateTime.Now</p>
+        </div>
+        <div class="col-6">
+            <small style="font-weight:bold">Usuario: </small>
+            <p>@ViewBag.usuario</p>
+        </div>
+        <div class="col-3">
+            <button type="button" id="adicionar" class="btn btn-lg btn-success" onclick="Add();">
+                <i class="fa fa-plus" aria-hidden="true"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row top-buffer">
+        <div class="col-3">
+            <small>Cifras:</small> 
+            <select id="cifras" class="form-control">
+                <option value="3">3</option>
+                <option value="4">4</option>
+            </select>
+        </div>
+        <div class="col-9">
+            <small>Loteria:</small> 
+            @Html.DropDownList("loterias", (SelectList)ViewBag.loterias, new { @class = "form-control" })
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row top-buffer">
+        <div class="col-6">
+            <small>Número:</small>
+            <input type="tel" class="form-control" id="numero" placeholder="#" />
+        </div>
+        <div class="col-6">
+            <small>Apuesta:</small> 
+            <input type="tel" class="form-control" id="valorJuego" placeholder="$" />
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row top-buffer">
+        <div class="col-4" style="padding-right:10px">
+            <small>Combinado:</small>
+            <input type="tel" class="form-control" id="valorCombinado" placeholder="$" />
+        </div>
+        <div class="col-4" style="padding-right:10px">
+            <small>Pata:</small>
+            <input type="tel" class="form-control" id="valorPata" placeholder="$" />
+        </div>
+        <div class="col-4" style="padding-right:10px">
+            <small>Uña:</small>
+            <input type="tel" class="form-control" id="valorUna" placeholder="$" />
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    <div class="row top-buffer" id="jugado">
+        <div class="col-12">
+            <table id="tblJuego" class="table  table-striped table-bordered table-hover table-condensed table-dark" style="font-size:14px">
+                <thead>
+                    <tr>
+                        <th>Número</th>
+                        <th>Directo</th>
+                        <th>Combinado</th>
+                        <th>Pata</th>
+                        <th>Uña</th>
+                    </tr>
+                </thead>
+                <tbody>
+                   
+                </tbody>
+                <tfoot>
+                    
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row top-buffer">
+        <div class="col-6">
+            <h4 style="font-weight:bold;display:inline" id="totalCompleto">Apuesta: $0</h4>
+        </div>
+        <div class="col-6">
+            Telefono: <input type="tel" id="telefono" class="form-control" />
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row top-buffer">
+        <div class="col-6">
+            <button id="apostar" class = "btn btn-sm btn-danger" style = "width:100%">Apostar</button>
+        </div>
+        <div class="col-6">
+            <input type="button" value="Borrar" class="btn btn-sm btn-info" style="width:100%" />
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#apostar").click(function () {
+            //obtener los datos
+            var telefono = $("#telefono").val();
+            var jsonTabla = tableToJson($("#tblJuego"));
+            var loteria = $("#loterias").val();
+            var cifras = $("#cifrash").val();
+            //enviarlos al back
+            //al retornar pasar los datos al ticket
+            var data = JSON.stringify({
+            'telefono': telefono,
+            'apuestas': jsonTabla,
+            'loteria': loteria,
+            'cifras': cifras
+        });
+
+        $.ajax({
+            type: "POST",
+            url: '@Url.Action("Apostar", "Home")',
+            datatype: "json",
+            contentType: 'application/json',
+            data: data,
+            success: function (r) {
+                //alertify para tomar la desicion
+                //abrir un uevo formulario o abrir el tickete    
+                alert(r);
+            },
+            error: function (r) {
+                alert(r);
+            }
+        })
+        });
+    });
+</script>
+<script>
+    function Add()
+    {
+        //obtener todos los datos para la adicion
+        var numero = $('#numero').val();
+        var valor = $('#valorJuego').val();
+        var combinado = $('#valorCombinado').val();
+        var pata = $('#valorPata').val();
+        var una = $('#valorUna').val();
+
+        //validar minimos datos ingresados
+        if (!(numero && valor))
+        {
+            alert('debe ingresar mínimo numero y valor de apuesta');
+            return;
+        }
+
+        if (numero.length < 4 && $("#cifras").val() == '4')
+        {
+            alert('es un juego de 4 cifras');
+            return;
+        }
+
+        if (numero.length < 3 && $("#cifras").val() == '3')
+        {
+            alert('es un juego de 4 cifras');
+            return;
+        }
+
+        var tabla = $("#tblJuego tbody");
+
+        var fila = '<tr><td style="text-align:right;font-weight:bold">' + numero + '</td><td style="text-align:right;font-weight:bold">$' + valor + '</td><td style="text-align:right;font-weight:bold">$' + combinado + '</td><td style="text-align:right;font-weight:bold">$' + pata + '</td><td style="text-align:right;font-weight:bold">$' + una + '</td></tr>'
+        tabla.append(fila);
+
+        calcularTotales();
+
+        reiniciarFormulario();
+    }
+
+    function reiniciarFormulario()
+    {
+        $('#numero').val('');
+        $('#valorJuego').val('');
+        $('#valorCombinado').val('');
+        $('#valorPata').val('');
+        $('#valorUna').val('');
+    }
+
+    function calcularTotales()
+    {
+        var tabla = $("#tblJuego tfoot");
+        tabla.empty();
+        var jsonTabla = tableToJson($("#tblJuego"));
+
+        var valor = 0;
+        var combinado = 0;
+        var pata = 0;
+        var una = 0;
+        var totalCompleto = 0;
+
+        for (i = 0; i < jsonTabla.length; i++)
+        {
+            valor = valor + jsonTabla[i].directo;
+            combinado = combinado + jsonTabla[i].combinado;
+            pata = pata + jsonTabla[i].pata;
+            una = una + jsonTabla[i].uña;
+        }
+
+        
+        var fila = '<tr><td style="text-align:right;font-weight:bold">Total</td><td style="text-align:right;font-weight:bold">$' + valor + '</td><td style="text-align:right;font-weight:bold">$' + combinado + '</td><td style="text-align:right;font-weight:bold">$' + pata + '</td><td style="text-align:right;font-weight:bold">$' + una + '</td></tr>'
+        tabla.append(fila);
+
+        totalCompleto = valor + combinado + pata + una;
+        $("#totalCompleto").text('Apuesta $' + totalCompleto);
+    }
+
+    $(document).ready(function () {
+        $("#cifrash").val($("#cifras").val());
+    }
+    );
+
+    $(document).ready(
+        function () {
+            $("#cifras").change(function () {
+                $("#cifrash").val($("#cifras").val());
+            });
+        }
+    );
+
+    $('#numero').on('input', function (e) {
+        var cifrasPermitidas = $("#cifrash").val();
+        var valorPermitido = $("#numero").val().substr(0, cifrasPermitidas);
+        $("#numero").val(valorPermitido);
+    });
+
+    $('#valorJuego').on('input', function (e) {
+        var cifrasPermitidas = 5;
+        var valorPermitido = $("#valorJuego").val().substr(0, cifrasPermitidas);
+        $("#valorJuego").val(valorPermitido);
+    });
+
+    $('#valorCombinado').on('input', function (e) {
+        var cifrasPermitidas = 5;
+        var valorPermitido = $("#valorCombinado").val().substr(0, cifrasPermitidas);
+        $("#valorCombinado").val(valorPermitido);
+    });
+
+    $('#valorPata').on('input', function (e) {
+        var cifrasPermitidas = 5;
+        var valorPermitido = $("#valorPata").val().substr(0, cifrasPermitidas);
+        $("#valorPata").val(valorPermitido);
+    });
+
+    $('#valorUna').on('input', function (e) {
+        var cifrasPermitidas = 5;
+        var valorPermitido = $("#valorUna").val().substr(0, cifrasPermitidas);
+        $("#valorUna").val(valorPermitido);
+    });
+
+        $('#telefono').on('input', function (e) {
+        var cifrasPermitidas = 12;
+        var valorPermitido = $("#telefono").val().substr(0, cifrasPermitidas);
+        $("#telefono").val(valorPermitido);
+        });
+
+    function tableToJson(tabla) {
+    var data = [];
+    var table = $(tabla)[0];
+    // first row needs to be headers
+    var headers = [];
+    for (var i=0; i<table.rows[0].cells.length; i++) {
+        headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
+    }
+
+    // go through cells
+    for (var i=1; i<table.rows.length; i++) {
+
+        var tableRow = table.rows[i];
+        var rowData = {};
+
+        for (var j=0; j<tableRow.cells.length; j++) {
+            var initValor = tableRow.cells[j].innerHTML;
+            initValor = initValor.replace('$', ' ');
+            if (!isNaN(parseInt(initValor)))
+                rowData[headers[j]] = parseInt(initValor);
+            else
+                rowData[headers[j]] = 0;
+        }
+
+        data.push(rowData);
+    }       
+
+    return data;
+}
+</script>
+

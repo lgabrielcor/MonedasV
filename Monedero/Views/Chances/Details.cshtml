@@ -1,0 +1,123 @@
+﻿@model Model.Chance
+
+@{
+    ViewBag.Title = "Detalle de juego";
+}
+
+<div>
+    <h4>@ViewBag.Title para el teléfono @Model.telefono</h4>
+        <hr />
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6 col-sm-6">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.loteria.nombre)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.loteria.nombre)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.vendedor.nombre)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.vendedor.nombre)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.fecha)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.fecha)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.sorteo)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.sorteo)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.totalApuesta)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.totalApuesta)
+                        </dd>
+
+                    </dl>
+                </div>
+                <div class="col-md-6 col-sm-6">
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.telefono)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.telefono)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.serial)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.serial)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.codigoDeValidacion)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.codigoDeValidacion)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.cifras)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.cifras)
+                        </dd>
+
+                    </dl>
+                </div>
+            </div>
+        </div>
+</div>
+
+<div>
+    <table class="table  table-striped table-bordered table-hover table-condensed">
+        <thead>
+            <tr>
+                <th>Número</th>
+                <th>Directo</th>
+                <th>Combinado</th>
+                <th>Pata</th>
+                <th>Uña</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.apuestas)
+            {
+            <tr>
+                <td>@item.numero</td>
+                <td>@item.directo</td>
+                <td>@item.combinado</td>
+                <td>@item.pata</td>
+                <td>@item.una</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Volver a la lista de chances jugados", "Index")
+</p>

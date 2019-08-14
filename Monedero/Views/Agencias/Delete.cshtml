@@ -1,0 +1,80 @@
+﻿@model Servicios.DTO.AgenciaDTO
+
+@{
+    ViewBag.Title = "Borrar";
+}
+
+<h2>Borrar </h2>
+
+<h3>¿Estás seguro que quieres eliminar el elemento?</h3>
+<div>
+    <h4>Agencia</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nit)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.nombreRepresentanteLegal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombreRepresentanteLegal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.cedulaRepresentanteLegal)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.cedulaRepresentanteLegal)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.direccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.direccion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.telefono)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.telefono)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.estado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.estado)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Borrar" class="btn btn-danger" /> |
+            @Html.ActionLink("Volver al Inicio", "Index", new { id = "0" } ,new { @class = "btn btn-sm btn-default" } )
+        </div>
+    }
+</div>
