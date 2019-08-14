@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using Model;
 using Persistencia;
 using Servicios.DTO;
+using System.Data.Entity;
 
 namespace Servicios.DAO
 {
@@ -103,6 +104,45 @@ namespace Servicios.DAO
             juego.codigoDeValidacion = model.codigoDeValidacion;
             juego.serial = model.serial;
             return model;
+        }
+
+        public JuegoDTO getBySerial(string id)
+        {
+            try
+            {
+                var model = db.chances.Include(x => x.apuestas).Include(x => x.loteria).Include(x => x.vendedor).FirstOrDefault(x => x.serial == id.Trim());
+                if (model == null)
+                { throw new Exception("serial no existe"); }
+
+                JuegoDTO result = new JuegoDTO();
+                result.cifras = model.cifras.ToString();
+                result.codigoDeValidacion = model.codigoDeValidacion;
+                result.loteria = model.loteria.nombre;
+                result.fecha = model.fecha;
+                result.fechaSorteo = model.loteria.proximoSorteo;
+                result.sorteo = model.sorteo;
+
+                result.serial = id;
+                result.telefono = model.telefono;
+                result.vendedorId = model.vendedorId;
+                result.vendedor = model.vendedor.nombre;
+                model.apuestas.ForEach(x => {
+                    ApuestaDTO item = new ApuestaDTO();
+                    item.combinado = x.combinado.Value;
+                    item.directo = x.directo;
+                    item.número = int.Parse(x.numero);
+                    item.pata = x.pata.Value;
+                    item.uña = x.una.Value;
+                    result.apuestas.Add(item);
+                });
+                result.totalApuesta = model.totalApuesta;
+                return result;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿
+﻿@model Servicios.DTO.JuegoDTO
 @{
     ViewBag.Title = "Ticket";
     Layout = "~/Views/Shared/_blanco.cshtml";
@@ -8,14 +8,14 @@
 
 <div id="encabezado">
     <h2>Lottingo</h2>
-    <p id="serial">Serial: B5804589-BC2F-4A31-A402-A9AC0B9ABF09</p>
-    <p id="agente">vendedor: 3***4025</p>
-    <p id="fecha">Fecha: 16/05/2019 16:00:05</p>
-    <p id="loteria">Bog-2498</p>
-    <p id="sorteo">S: 2498</p>
-    <p id="fecha_sort">Fecha sort: 16/05/2019 19:00:00</p>
-    <p id="check">23101A3F59ED422C8B90A75BD5704F55</p>
-    <p id="phone">******3212</p>
+    <p id="serial">Serial: @Model.serial</p>
+    <p id="agente">vendedor: @Model.vendedor</p>
+    <p id="fecha">Fecha: @Model.fecha</p>
+    <p id="loteria">Lotería: @Model.loteria</p>
+    <p id="sorteo">Sorteo: @Model.sorteo</p>
+    <p id="fecha_sort">Fecha sort: @Model.fechaSorteo</p>
+    <p id="check">@Model.codigoDeValidacion</p>
+    <p id="phone">@Model.telefono</p>
 </div>
 <div id="juego">
     <table>
@@ -29,22 +29,18 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>0716</td>
-                <td style="text-align:right">$1000</td>
-                <td style="text-align:right">$1000</td>
-                <td style="text-align:right">$100</td>
-                <td style="text-align:right">$100</td>
-            </tr>
-            <tr>
-                <td>4024</td>
-                <td style="text-align:right">$1000</td>
-                <td style="text-align:right">$1000</td>
-                <td style="text-align:right">$100</td>
-                <td style="text-align:right">$100</td>
-            </tr>
+            @foreach (var item in Model.apuestas)
+            {
+                <tr>
+                    <td>@item.número</td>
+                    <td style="text-align:right">$@item.directo</td>
+                    <td style="text-align:right">$@item.combinado</td>
+                    <td style="text-align:right">$@item.pata</td>
+                    <td style="text-align:right">$@item.uña</td>
+                </tr>
+            }
         </tbody>
-        <tfoot>
+        @*<tfoot>
             <tr id="total">
                 <td style="font-weight:bold">Totales</td>
                 <td style="text-align:right;font-weight:bold">$2000</td>
@@ -52,13 +48,13 @@
                 <td style="text-align:right;font-weight:bold">$200</td>
                 <td style="text-align:right;font-weight:bold">$200</td>
             </tr>
-        </tfoot>
+        </tfoot>*@
     </table>
 </div>
 <hr style="border:1px dotted blue;">
 <div id="total">
     <div class="col-6">
-        <h3 style="font-weight:bold;display:inline">Apuesta: $4400</h3>
+        <h3 style="font-weight:bold;display:inline">Apuesta: $@Model.totalApuesta</h3>
     </div>
 </div>
 <br />
@@ -69,7 +65,7 @@
                 <button id="imprimir" class="btn btn-lg btn-success" onclick="window.print()">Imprimir</button>
             </div>
             <div class="col-6">
-                @Html.ActionLink("Volver","Juego", "Home", new { @class="btn btn-lg btn-danger"})
+                @Html.ActionLink("Volver", "Juego", "Home", new { @class = "btn btn-lg btn-danger" })
             </div>
         </div>
     </div>
@@ -78,10 +74,10 @@
 
 
 @*<script>
-    function print () {
-        $("#imprimir").hide();
-        //window.location.replace('@Url.Action("Juego","Home")');
-        window.print();
-        window.close();
-    }
-</script>*@
+        function print () {
+            $("#imprimir").hide();
+            //window.location.replace('@Url.Action("Juego","Home")');
+            window.print();
+            window.close();
+        }
+    </script>*@

@@ -48,6 +48,24 @@ namespace Monedas.Controllers
             }
         }
 
+        public ActionResult Ticket(string id)
+        {
+            try
+            {
+                UsuarioDTO usuarioDTO = (UsuarioDTO)Session["usuario"];
+                if (usuarioDTO == null)
+                { return View("Index"); }
+                ChanceDAO chance = new ChanceDAO(this);
+                JuegoDTO juegoCreado = chance.getBySerial(id);
+                return View(juegoCreado);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public ActionResult Apostar(JuegoDTO juego)
         {
             try
@@ -55,11 +73,9 @@ namespace Monedas.Controllers
                 UsuarioDTO usuarioDTO = (UsuarioDTO)Session["usuario"];
                 ChanceDAO chance = new ChanceDAO(this);
 
+                JuegoDTO juegoCreado = chance.Apostar(juego, usuarioDTO);
 
-
-                chance.Apostar(juego, usuarioDTO);
-
-                return View("Ticket");
+                return Json(juegoCreado);
             }
             catch (Exception ex)
             {
