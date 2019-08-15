@@ -22,6 +22,11 @@ namespace Monedero.Controllers
             return View(sorteo.ToList());
         }
 
+        public ActionResult Sorteos()
+        {
+            return View();
+        }
+
         // GET: Sorteos/Details/5
         public ActionResult Details(int? id)
         {

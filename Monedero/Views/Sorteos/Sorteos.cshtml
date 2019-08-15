@@ -1,0 +1,250 @@
+﻿
+@{
+    ViewBag.Title = "Sorteos";
+}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+
+<div style="background-color:white; padding:10px">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5">
+                Lotería:
+                <select class="loteriaList form-control">
+                    <option>Lotería de Bogotá</option>
+                    <option>Lotería de Medellín</option>
+                    <option>Lotería de Boyacá</option>
+                    <option>Sorteo extraordinario</option>
+                    <option>Chontico tarde</option>
+                    <option>Chontico noche</option>
+                </select>
+            </div>
+            <div class="col-md-5">
+                Sorteo:
+                <select id="sorteoList" class="form-control">
+                    <option>2494</option>
+                    <option>2495</option>
+                    <option>2496</option>
+                    <option>2497</option>
+                    <option>2498</option>
+                </select>
+            </div>
+
+            <div class="col-md-2">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" style="background-color:lightgray;padding:20px">
+    <div class="row">
+        <div class="col-md-4">
+            Número jugado:
+            <input type="number" class="form-control" />
+        </div>
+        <div class="col-md-4">
+            Confirmar número jugado:
+            <input type="number"  class="form-control" />
+        </div>
+        <div class="col-md-2">
+            <br />
+            <p></p>
+            <button class="btn btn-md btn-success">
+                Buscar
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid" style="background-color:ghostwhite"> 
+    <div class="row">
+        <div class="col-md-4">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayName("Lotería jugada")
+                </dt>
+
+                <dd>
+                    Lotería de Bogotá
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-4">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayName("Valor jugado")
+                </dt>
+
+                <dd>
+                    $115.345.100
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-4">
+            <dl class="dl-horizontal">
+                <dt>
+                    @Html.DisplayName("Valor en premios")
+                </dt>
+
+                <dd>
+                    $1.500.000
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid" style="padding:20px; background-color:lightgray">
+    <div class="row">
+        <div class="col-md-12">
+            <table id="tblinx" class="table  table-striped table-bordered table-hover table-responsive table-condensed">
+                <thead>
+                    <tr>
+                        <th colspan="1">
+                            Ganadores del sorteo
+                        </th>
+                        <th colspan="5">
+                            Valor ganado
+                        </th>
+                    </tr>
+                    <tr>
+                        <th>Teléfono</th>
+                        <th>Número jugado</th>
+                        <th>Completo</th>
+                        <th>Combinado</th>
+                        <th>Pata</th>
+                        <th>Uña</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>3103103212</td>
+                        <td>2517</td>
+                        <td>120000</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>3103103213</td>
+                        <td>2517</td>
+                        <td>420000</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>3103103214</td>
+                        <td>2517</td>
+                        <td>120000</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>3103103222</td>
+                        <td>2517</td>
+                        <td>31000</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>3103303212</td>
+                        <td>7517</td>
+                        <td>0</td>
+                        <td>5000</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>3105663212</td>
+                        <td>417</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>5000</td>
+                    </tr>
+                    <tr>
+                        <td>3103456212</td>
+                        <td>517</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1000</td>
+                    </tr>
+                    <tr>
+                        <td>3103103232</td>
+                        <td>4517</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>2000</td>
+                    </tr>
+                    <tr>
+                        <td>3155103212</td>
+                        <td>7251</td>
+                        <td>320000</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>3103503212</td>
+                        <td>2571</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>1500</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>3103183212</td>
+                        <td>217</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>2000</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>3103188212</td>
+                        <td>317</td>
+                        <td>0</td>
+                        <td>6000</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>3145603212</td>
+                        <td>4517</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>3500</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>31668103212</td>
+                        <td>517</td>
+                        <td>320000</td>
+                        <td>0</td>
+                        <td>0</td>
+                        <td>0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $('#tblinx').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json",
+                "emptyTable": "Sin datos en la lista"
+            },
+            responsive: false,
+            "pageLength": 5
+        });
+    });
+</script>
+
